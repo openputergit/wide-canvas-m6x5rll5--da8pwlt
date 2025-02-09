@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Meal Planner</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f0f9ff;
+        }
+        .progress {
+            transition: width 0.5s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="min-h-screen">
+        <!-- Header -->
+        <header class="bg-white shadow-sm">
+            <div class="container mx-auto px-4 py-4">
+                <h1 class="text-2xl font-bold text-cyan-600">Smart Meal Planner</h1>
+            </div>
+        </header>
+
+        <!-- Multi-step Form -->
+        <div class="container mx-auto px-4 py-8">
+            <div class="max-w-3xl mx-auto bg-white rounded-lg shadow-md p-6">
+                <!-- Progress Bar -->
+                <div class="mb-8">
+                    <div class="h-2 bg-gray-200 rounded-full">
+                        <div class="progress h-2 bg-cyan-500 rounded-full" style="width: 0%"></div>
+                    </div>
+                    <div class="flex justify-between mt-2 text-sm text-gray-500">
+                        <span>Basic Info</span>
+                        <span>Activity</span>
+                        <span>Diet</span>
+                        <span>Goals</span>
+                    </div>
+                </div>
+
+                <!-- Form Steps -->
+                <form id="mealPlanForm" class="space-y-6">
+                    <!-- Step 1: Basic Info -->
+                    <div id="step1" class="step">
+                        <h2 class="text-xl font-semibold mb-4">Basic Information</h2>
+                        <div class="grid gap-4 md:grid-cols-2">
+                            <div>
+                                <label class="block text-sm font-medium mb-1">Age</label>
+                                <input type="number" required name="age" class="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-cyan-500">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-1">Weight (kg)</label>
+                                <input type="number" required name="weight" class="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-cyan-500">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-1">Height (cm)</label>
+                                <input type="number" required name="height" class="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-cyan-500">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-1">Gender</label>
+                                <select name="gender" class="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-cyan-500">
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 2: Activity Level -->
+                    <div id="step2" class="step hidden">
+                        <h2 class="text-xl font-semibold mb-4">Activity Level</h2>
+                        <div class="space-y-4">
+                            <label class="block p-4 border rounded cursor-pointer hover:bg-gray-50">
+                                <input type="radio" name="activity" value="sedentary" class="mr-2">
+                                Sedentary (Little to no exercise)
+                            </label>
+                            <label class="block p-4 border rounded cursor-pointer hover:bg-gray-50">
+                                <input type="radio" name="activity" value="moderate" class="mr-2">
+                                Moderate (Exercise 3-5 times/week)
+                            </label>
+                            <label class="block p-4 border rounded cursor-pointer hover:bg-gray-50">
+                                <input type="radio" name="activity" value="active" class="mr-2">
+                                Very Active (Exercise 6-7 times/week)
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Step 3: Dietary Preferences -->
+                    <div id="step3" class="step hidden">
+                        <h2 class="text-xl font-semibold mb-4">Dietary Preferences</h2>
+                        <div class="space-y-4">
+                            <label class="block p-4 border rounded cursor-pointer hover:bg-gray-50">
+                                <input type="checkbox" name="diet" value="vegetarian" class="mr-2">
+                                Vegetarian
+                            </label>
+                            <label class="block p-4 border rounded cursor-pointer hover:bg-gray-50">
+                                <input type="checkbox" name="diet" value="keto" class="mr-2">
+                                Keto
+                            </label>
+                            <label class="block p-4 border rounded cursor-pointer hover:bg-gray-50">
+                                <input type="checkbox" name="diet" value="highProtein" class="mr-2">
+                                High Protein
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Step 4: Health Goals -->
+                    <div id="step4" class="step hidden">
+                        <h2 class="text-xl font-semibold mb-4">Health Goals</h2>
+                        <div class="space-y-4">
+                            <label class="block p-4 border rounded cursor-pointer hover:bg-gray-50">
+                                <input type="radio" name="goal" value="weightLoss" class="mr-2">
+                                Weight Loss
+                            </label>
+                            <label class="block p-4 border rounded cursor-pointer hover:bg-gray-50">
+                                <input type="radio" name="goal" value="muscleGain" class="mr-2">
+                                Muscle Gain
+                            </label>
+                            <label class="block p-4 border rounded cursor-pointer hover:bg-gray-50">
+                                <input type="radio" name="goal" value="maintenance" class="mr-2">
+                                Maintenance
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Navigation Buttons -->
+                    <div class="flex justify-between pt-4">
+                        <button type="button" id="prevBtn" class="hidden px-6 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300">
+                            Previous
+                        </button>
+                        <button type="button" id="nextBtn" class="px-6 py-2 bg-cyan-500 text-white rounded hover:bg-cyan-600">
+                            Next
+                        </button>
+                        <button type="submit" id="submitBtn" class="hidden px-6 py-2 bg-green-500 text-white rounded hover:bg-green-600">
+                            Generate Meal Plan
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Results Section (Initially Hidden) -->
+                <div id="results" class="hidden space-y-6">
+                    <div class="text-center">
+                        <h2 class="text-2xl font-bold text-cyan-600 mb-2">Your Personalized Meal Plan</h2>
+                        <p class="text-gray-600">Based on your BMI: <span id="bmiResult" class="font-semibold"></span></p>
+                    </div>
+
+                    <div class="grid gap-6 md:grid-cols-2">
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <h3 class="font-semibold mb-2">Daily Calories</h3>
+                            <p id="caloriesResult" class="text-lg text-cyan-600"></p>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <h3 class="font-semibold mb-2">Macronutrients</h3>
+                            <div id="macrosResult" class="space-y-2"></div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4">
+                        <h3 class="font-semibold">Sample Daily Menu</h3>
+                        <div id="mealPlanResult" class="space-y-4"></div>
+                    </div>
+
+                    <button onclick="location.reload()" class="w-full px-6 py-2 bg-cyan-500 text-white rounded hover:bg-cyan-600">
+                        Start Over
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('mealPlanForm');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const submitBtn = document.getElementById('submitBtn');
+        const progress = document.querySelector('.progress');
+        let currentStep = 1;
+        const totalSteps = 4;
+
+        // Sample meal database
+        const mealDatabase = {
+            weightLoss: {
+                breakfast: ['Oatmeal with berries', 'Greek yogurt with honey', 'Egg white omelet'],
+                lunch: ['Grilled chicken salad', 'Quinoa bowl', 'Turkey wrap'],
+                dinner: ['Baked salmon', 'Vegetable stir-fry', 'Lean beef with vegetables']
+            },
+            muscleGain: {
+                breakfast: ['Protein smoothie', 'Eggs and toast', 'Protein pancakes'],
+                lunch: ['Chicken rice bowl', 'Tuna pasta', 'Turkey sandwich'],
+                dinner: ['Grilled steak', 'Chicken breast', 'Fish with quinoa']
+            },
+            maintenance: {
+                breakfast: ['Avocado toast', 'Fruit smoothie', 'Cereal with milk'],
+                lunch: ['Mediterranean salad', 'Veggie wrap', 'Soup and sandwich'],
+                dinner: ['Grilled fish', 'Chicken stir-fry', 'Bean burrito']
+            }
+        };
+
+        function updateProgress() {
+            const percentage = ((currentStep - 1) / totalSteps) * 100;
+            progress.style.width = `${percentage}%`;
+        }
+
+        function showStep(step) {
+            document.querySelectorAll('.step').forEach(s => s.classList.add('hidden'));
+            document.getElementById(`step${step}`).classList.remove('hidden');
+
+            prevBtn.classList.toggle('hidden', step === 1);
+            nextBtn.classList.toggle('hidden', step === totalSteps);
+            submitBtn.classList.toggle('hidden', step !== totalSteps);
+
+            updateProgress();
+        }
+
+        prevBtn.addEventListener('click', () => {
+            if (currentStep > 1) {
+                currentStep--;
+                showStep(currentStep);
+            }
+        });
+
+        nextBtn.addEventListener('click', () => {
+            if (validateStep(currentStep)) {
+                if (currentStep < totalSteps) {
+                    currentStep++;
+                    showStep(currentStep);
+                }
+            }
+        });
+
+        function validateStep(step) {
+            switch(step) {
+                case 1:
+                    const requiredFields = ['age', 'weight', 'height'];
+                    return requiredFields.every(field => {
+                        const value = form.elements[field].value;
+                        return value && !isNaN(value) && value > 0;
+                    });
+                case 2:
+                    return form.elements['activity'].value;
+                case 3:
+                    return true; // Dietary preferences are optional
+                case 4:
+                    return form.elements['goal'].value;
+                default:
+                    return true;
+            }
+        }
+
+        function calculateBMI(weight, height) {
+            const heightInMeters = height / 100;
+            return (weight / (heightInMeters * heightInMeters)).toFixed(1);
+        }
+
+        function calculateCalories(age, weight, height, gender, activity, goal) {
+            // Basic BMR calculation using Harris-Benedict equation
+            let bmr;
+            if (gender === 'male') {
+                bmr = 88.362 + (13.397 * weight) + (4.799 * height) - (5.677 * age);
+            } else {
+                bmr = 447.593 + (9.247 * weight) + (3.098 * height) - (4.330 * age);
+            }
+
+            // Activity multiplier
+            const activityMultipliers = {
+                sedentary: 1.2,
+                moderate: 1.55,
+                active: 1.9
+            };
+
+            let calories = bmr * activityMultipliers[activity];
+
+            // Adjust for goal
+            switch(goal) {
+                case 'weightLoss':
+                    calories -= 500;
+                    break;
+                case 'muscleGain':
+                    calories += 500;
+                    break;
+            }
+
+            return Math.round(calories);
+        }
+
+        function generateMealPlan(formData) {
+            const calories = calculateCalories(
+                parseInt(formData.age),
+                parseInt(formData.weight),
+                parseInt(formData.height),
+                formData.gender,
+                formData.activity,
+                formData.goal
+            );
+
+            const bmi = calculateBMI(parseInt(formData.weight), parseInt(formData.height));
+            
+            // Display results
+            document.getElementById('bmiResult').textContent = `${bmi} (${getBMICategory(bmi)})`;
+            document.getElementById('caloriesResult').textContent = `${calories} calories/day`;
+            
+            // Calculate macros
+            const macros = calculateMacros(calories, formData.goal);
+            document.getElementById('macrosResult').innerHTML = `
+                <p>Protein: ${macros.protein}g</p>
+                <p>Carbs: ${macros.carbs}g</p>
+                <p>Fat: ${macros.fat}g</p>
+            `;
+
+            // Generate sample meals
+            const meals = mealDatabase[formData.goal];
+            const mealPlan = `
+                <div class="bg-white p-4 rounded-lg shadow">
+                    <h4 class="font-semibold text-cyan-600">Breakfast</h4>
+                    <p>${meals.breakfast[Math.floor(Math.random() * meals.breakfast.length)]}</p>
+                </div>
+                <div class="bg-white p-4 rounded-lg shadow">
+                    <h4 class="font-semibold text-cyan-600">Lunch</h4>
+                    <p>${meals.lunch[Math.floor(Math.random() * meals.lunch.length)]}</p>
+                </div>
+                <div class="bg-white p-4 rounded-lg shadow">
+                    <h4 class="font-semibold text-cyan-600">Dinner</h4>
+                    <p>${meals.dinner[Math.floor(Math.random() * meals.dinner.length)]}</p>
+                </div>
+            `;
+            document.getElementById('mealPlanResult').innerHTML = mealPlan;
+        }
+
+        function getBMICategory(bmi) {
+            if (bmi < 18.5) return 'Underweight';
+            if (bmi < 25) return 'Normal weight';
+            if (bmi < 30) return 'Overweight';
+            return 'Obese';
+        }
+
+        function calculateMacros(calories, goal) {
+            let protein, carbs, fat;
+            switch(goal) {
+                case 'weightLoss':
+                    protein = Math.round((calories * 0.4) / 4);
+                    carbs = Math.round((calories * 0.3) / 4);
+                    fat = Math.round((calories * 0.3) / 9);
+                    break;
+                case 'muscleGain':
+                    protein = Math.round((calories * 0.3) / 4);
+                    carbs = Math.round((calories * 0.5) / 4);
+                    fat = Math.round((calories * 0.2) / 9);
+                    break;
+                default: // maintenance
+                    protein = Math.round((calories * 0.3) / 4);
+                    carbs = Math.round((calories * 0.4) / 4);
+                    fat = Math.round((calories * 0.3) / 9);
+            }
+            return { protein, carbs, fat };
+        }
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const formData = {
+                age: form.elements['age'].value,
+                weight: form.elements['weight'].value,
+                height: form.elements['height'].value,
+                gender: form.elements['gender'].value,
+                activity: form.elements['activity'].value,
+                goal: form.elements['goal'].value,
+                diet: Array.from(form.elements['diet'])
+                    .filter(checkbox => checkbox.checked)
+                    .map(checkbox => checkbox.value)
+            };
+
+            form.classList.add('hidden');
+            document.getElementById('results').classList.remove('hidden');
+            generateMealPlan(formData);
+        });
+
+        // Initialize first step
+        showStep(1);
+    </script>
+<script>document.body.addEventListener('wheel', e => { if (!e.ctrlKey) return; e.preventDefault(); return }, { passive: false })</script>
+	</body>
+</html>
